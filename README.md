@@ -10,7 +10,6 @@ configuration experience.
 
 ![Screenshot 01](screenshots/screen01.png)
 ![Screenshot 02](screenshots/screen02.png)
-![Screenshot 03](screenshots/screen03.png)
 
 ## Opinionated Changes
 
