@@ -1,6 +1,6 @@
 # nvim-config
 
-This document contains my neovim configuration plus
+This repo contains my neovim configuration plus
 the `i-love-volvo` theme, which I forked from another theme.
 
 It uses LazyNvim under the hood for providing a good
