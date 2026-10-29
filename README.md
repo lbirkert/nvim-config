@@ -8,9 +8,9 @@ configuration experience.
 
 ## Screenshots
 
-![Screenshot 01](screen01.png)
-![Screenshot 02](screen02.png)
-![Screenshot 03](screen03.png)
+![Screenshot 01](screenshots/screen01.png)
+![Screenshot 02](screenshots/screen02.png)
+![Screenshot 03](screenshots/screen03.png)
 
 ## Opinionated Changes
 
