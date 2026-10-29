@@ -1,0 +1,118 @@
+local M = {}
+
+---@class ILoveVolvoSyntaxColors
+---@field comment string
+---@field doc_comment string
+---@field string string
+---@field number string
+---@field constant string
+---@field type string
+---@field keyword string
+---@field builtin string
+---@field func string
+---@field field string
+---@field property string
+---@field variable string
+---@field operator string
+---@field punctuation string
+---@field bracket string
+---@field special string
+---@field preproc string
+
+---@class ILoveVolvoColors: ILoveVolvoPalette
+---@field bg_sidebar string
+---@field bg_float string
+---@field bg_popup string
+---@field bg_highlight string
+---@field bg_dim string A shade off black, for a region set apart from the buffer
+---@field bg_visual string
+---@field bg_statusline string
+---@field bg_match string
+---@field fg_gutter string
+---@field fg_muted string
+---@field border string
+---@field separator string
+---@field cursor string
+---@field syntax ILoveVolvoSyntaxColors
+---@field diag { error: string, warn: string, info: string, hint: string, ok: string }
+---@field git { add: string, change: string, delete: string }
+---@field git_staged { add: string, change: string, delete: string } Signs of staged hunks
+---@field diff { add: string, change: string, delete: string, text: string } Line backgrounds
+
+---Build semantic colors on top of the raw palette
+---@param opts ILoveVolvoConfig
+---@return ILoveVolvoColors
+function M.setup(opts)
+	---@type ILoveVolvoColors
+	local c = vim.deepcopy(require("i-love-volvo.palette"))
+
+	-- UI
+	-- Floats stay opaque, so a borderless popup keeps its edge on a transparent terminal
+	c.bg_float = c.bg
+	c.bg_popup = c.bg
+	c.bg = opts.transparent and c.none or c.bg
+	c.bg_sidebar = opts.transparent and c.none or c.bg_alt
+	c.bg_highlight = c.bg1
+	c.bg_dim = c.bg_alt
+	c.bg_visual = c.bg2
+	c.bg_statusline = c.bg1
+	c.bg_match = c.match
+	c.fg_gutter = c.bg4
+	c.fg_muted = c.niagara_dark
+	c.border = c.gray_dark
+	c.separator = c.gray_dark
+	c.cursor = c.yellow
+
+	c.syntax = {
+		comment = c.fg2,
+		doc_comment = c.fg2,
+		string = c.green,
+		number = c.quartz,
+		constant = c.quartz,
+		type = c.quartz,
+		keyword = c.yellow,
+		builtin = c.yellow,
+		func = c.niagara,
+		field = c.fg2,
+		property = c.fg2,
+		variable = c.fg2,
+		operator = c.fg,
+		punctuation = c.fg2,
+		bracket = c.fg2,
+		special = c.yellow,
+		preproc = c.quartz,
+	}
+
+	c.diag = {
+		error = c.red,
+		warn = c.yellow,
+		info = c.niagara,
+		hint = c.quartz,
+		ok = c.green,
+	}
+
+	c.git = {
+		add = c.green,
+		change = c.yellow,
+		delete = c.red,
+	}
+
+	c.git_staged = {
+		add = c.green_muted,
+		change = c.yellow_muted,
+		delete = c.red_muted,
+	}
+
+	c.diff = {
+		add = c.green_darker,
+		change = c.yellow_darker,
+		delete = c.red_darker,
+		text = c.yellow_dark,
+	}
+
+	opts.on_colors(c)
+
+	return c
+end
+
+return M

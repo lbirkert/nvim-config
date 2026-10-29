@@ -3,3 +3,7 @@
 -- Add any additional keymaps here
 
 vim.keymap.set("n", "<leader>fw", "<cmd>Telescope live_grep<cr>", { desc = "Find word" })
+
+vim.keymap.set("n", "<leader>cT", function()
+  require("config.rust").toggle()
+end, { desc = "Toggle rust-analyzer" })

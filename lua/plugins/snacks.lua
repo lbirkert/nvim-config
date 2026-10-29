@@ -6,7 +6,7 @@ return {
       opts.picker.sources = opts.picker.sources or {}
       opts.picker.sources.explorer = vim.tbl_deep_extend("force", opts.picker.sources.explorer or {}, {
         hidden = true,
-        ignored = true,
+        ignored = false,
       })
       return opts
     end,
@@ -59,6 +59,16 @@ return {
           })
         end
       end
+
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "LazyVimStarted",
+        once = true,
+        callback = function()
+          if vim.fn.argc(-1) == 0 then
+            Snacks.explorer.open()
+          end
+        end,
+      })
     end,
   },
 }
