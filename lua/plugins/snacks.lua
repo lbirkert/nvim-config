@@ -11,6 +11,7 @@ return {
       return opts
     end,
     init = function()
+      local Snacks = require("snacks")
       local Tree = require("snacks.explorer.tree")
       function Tree:walk(node, fn, opts)
         local abort = false
@@ -43,6 +44,20 @@ return {
           end
         end
         return false
+      end
+
+      local List = require("snacks.picker.core.list")
+      function List:update_cursorline()
+        if self.win:win_valid() then
+          Snacks.util.wo(self.win.win, {
+            cursorline = self:count() > 0,
+            winhighlight = Snacks.util.winhl(vim.wo[self.win.win].winhighlight, {
+              CursorLine = (self.picker:is_focused() or self.picker.opts.source == "explorer")
+                  and "SnacksPickerListCursorLine"
+                or "CursorLine",
+            }),
+          })
+        end
       end
     end,
   },

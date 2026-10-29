@@ -71,4 +71,39 @@ if bg == "dark" then
 	end
 end
 
+local comment_fg = "#f9bb5e"
+local delimiter_fg = bg == "dark" and "#b8b8b8" or "#8a8a8a"
+
+local is_comment = function(name)
+	return name == "Comment"
+		or name == "SpecialComment"
+		or name == "@comment"
+		or name == "@comment.documentation"
+		or name == "@lsp.type.comment"
+end
+
+local is_delimiter = function(name)
+	return name == "Delimiter"
+		or name == "markdownLinkTextDelimiter"
+		or name == "@tag.delimiter"
+		or name == "@constructor.lua"
+		or name:find("@punctuation", 1, true) ~= nil
+end
+
+local is_line_number = function(name)
+	return name == "LineNr" or name == "LineNrAbove" or name == "LineNrBelow" or name == "CursorLineNr"
+end
+
+for name, hl in pairs(spec) do
+	if type(hl) == "table" then
+		if is_comment(name) then
+			hl.link = nil
+			hl.fg = comment_fg
+		elseif is_delimiter(name) or is_line_number(name) then
+			hl.link = nil
+			hl.fg = delimiter_fg
+		end
+	end
+end
+
 return spec
